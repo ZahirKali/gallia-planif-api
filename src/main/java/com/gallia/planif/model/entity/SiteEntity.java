@@ -1,17 +1,20 @@
 package com.gallia.planif.model.entity;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class SiteEntity implements EntityComponent {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(updatable = false, nullable = false)
     private int id;
+
+    @Column
     private String name;
+
+    @ManyToOne
     private AddressEntity address;
 }
