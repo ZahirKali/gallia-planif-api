@@ -15,4 +15,17 @@ public interface CollaboratorService {
 
     Collection<Collaborator> getAll();
 
+    /**
+     * update collaborator
+     *
+     * @param collaborator collaborator
+     * @return updated collaborator
+     */
+    Collaborator update(Collaborator collaborator);
+
+    /**
+     * delete collaborator
+     * @param id collaborator id
+     */
+    void delete(Long id);
 }

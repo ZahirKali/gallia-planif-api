@@ -37,7 +37,7 @@ public class CollaboratorController {
         return ResponseEntity.ok(resourceMapper.map(created));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<Collection<CollaboratorResource>> getAll() {
         Collection<Collaborator> all = collaboratorService.getAll();
         List<CollaboratorResource> resources = all.stream()
@@ -45,4 +45,19 @@ public class CollaboratorController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(resources);
     }
+
+    @PostMapping("/id/{id}/update")
+    public ResponseEntity<CollaboratorResource> update(@RequestBody CollaboratorRequest request, @PathVariable Long id) {
+        Collaborator collaborator = requestMapper.map(request);
+        collaborator.setId(id);
+        Collaborator updated = collaboratorService.update(collaborator);
+        return ResponseEntity.ok(resourceMapper.map(updated));
+    }
+
+    @DeleteMapping("/id/{id}/delete")
+    public ResponseEntity<CollaboratorResource> delete(@PathVariable Long id) {
+        collaboratorService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

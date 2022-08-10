@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Client implements BusinessComponent {
-    private long id;
+    private Long id;
     private String name;
 }

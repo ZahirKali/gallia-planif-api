@@ -3,17 +3,17 @@ package com.gallia.planif.dao.model.business;
 import java.time.ZonedDateTime;
 
 public class Collaborator implements BusinessComponent{
-    private long id;
+    private Long id;
     private String proCardNumber;
     private String firstName;
     private String lastName;
     private ZonedDateTime birthDay;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

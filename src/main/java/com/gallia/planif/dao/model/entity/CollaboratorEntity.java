@@ -12,7 +12,7 @@ public class CollaboratorEntity implements EntityComponent {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-    private int id;
+    private Long id;
 
     @NaturalId
     @Column

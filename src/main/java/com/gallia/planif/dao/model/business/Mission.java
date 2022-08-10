@@ -6,7 +6,7 @@ import java.time.ZonedDateTime;
 
 @Data
 public class Mission implements BusinessComponent{
-    private long id;
+    private Long id;
     private ZonedDateTime start;
     private ZonedDateTime end;
     private String comment;
