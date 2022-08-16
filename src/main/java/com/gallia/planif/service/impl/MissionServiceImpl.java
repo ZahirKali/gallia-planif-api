@@ -58,8 +58,12 @@ public class MissionServiceImpl extends AbstractGenericService<Mission, MissionE
 
             ZonedDateTime midnight = zeroAM.plusDays(1);
 
-
-
+            if(startDate.isBefore(sixAM)) {
+                result = result + ChronoUnit.HOURS.between(sixAM, startDate);
+            }
+            if(endDate.isAfter(twentyOnePM)) {
+                result = result + ChronoUnit.HOURS.between(endDate, twentyOnePM);
+            }
         }
         // start day and end day are differents
         else {
