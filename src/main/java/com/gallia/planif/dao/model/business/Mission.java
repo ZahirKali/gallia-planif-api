@@ -14,4 +14,7 @@ public class Mission implements BusinessComponent{
     private Site site;
     private Provider provider;
     private Collaborator collaborator;
+    private double totalWorkedHoursNumber;
+    private double morningWorkedHoursNumber;
+    private double nightWorkedHoursNumber;
 }
