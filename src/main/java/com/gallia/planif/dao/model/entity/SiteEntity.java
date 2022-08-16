@@ -15,6 +15,6 @@ public class SiteEntity implements EntityComponent {
     @Column
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private AddressEntity address;
 }

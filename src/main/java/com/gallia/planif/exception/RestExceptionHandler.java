@@ -1,6 +1,6 @@
 package com.gallia.planif.exception;
 
-import com.gallia.planif.service.MessageService;
+import com.gallia.planif.service.impl.MessageServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,12 +16,12 @@ import java.util.Map;
 @RestControllerAdvice
 public class RestExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
-    private final MessageService messageService;
+    private final MessageServiceImpl messageService;
 
     private static final Map<String, String> CONSTRAINS_I18N_MAP =
             Map.of("pro_card_number", "PRO_CARD_NUMBER_ALREADY_EXISTS");
 
-    public RestExceptionHandler(MessageService messageService) {
+    public RestExceptionHandler(MessageServiceImpl messageService) {
         this.messageService = messageService;
     }
 

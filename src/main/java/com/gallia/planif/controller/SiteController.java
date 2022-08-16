@@ -1,14 +1,10 @@
 package com.gallia.planif.controller;
 
-import com.gallia.planif.dao.model.business.Mission;
 import com.gallia.planif.dao.model.business.Site;
 import com.gallia.planif.dao.model.mapper.BusinessRequestMapper;
 import com.gallia.planif.dao.model.mapper.BusinessResourceMapper;
-import com.gallia.planif.dao.model.request.MissionRequest;
 import com.gallia.planif.dao.model.request.SiteRequest;
-import com.gallia.planif.dao.model.resource.MissionResource;
 import com.gallia.planif.dao.model.resource.SiteResource;
-import com.gallia.planif.service.impl.MissionServiceImpl;
 import com.gallia.planif.service.impl.SiteServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,29 +12,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-public class MissionController extends AbstractController<Mission, MissionRequest, MissionResource> {
+public class SiteController extends AbstractController<Site, SiteRequest, SiteResource> {
 
-    private final String END_POINT = "/mission";
+    private final String END_POINT = "/site";
 
-    public MissionController(BusinessRequestMapper requestMapper, BusinessResourceMapper resourceMapper, MissionServiceImpl service) {
+    public SiteController(BusinessRequestMapper requestMapper, BusinessResourceMapper resourceMapper, SiteServiceImpl service) {
         super(requestMapper, resourceMapper, service);
     }
 
     @PostMapping(END_POINT)
     @Override
-    public ResponseEntity<MissionResource> create(@RequestBody MissionRequest request) {
+    public ResponseEntity<SiteResource> create(@RequestBody SiteRequest request) {
         return super.create(request);
     }
 
     @GetMapping(END_POINT)
     @Override
-    public ResponseEntity<Collection<MissionResource>> getAll() {
+    public ResponseEntity<Collection<SiteResource>> getAll() {
         return super.getAll();
     }
 
     @PostMapping(END_POINT + "/id/{id}/update")
     @Override
-    public ResponseEntity<MissionResource> update(@RequestBody MissionRequest request, @PathVariable Long id) {
+    public ResponseEntity<SiteResource> update(@RequestBody SiteRequest request, @PathVariable Long id) {
         return super.update(request, id);
     }
 

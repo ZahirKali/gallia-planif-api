@@ -6,8 +6,9 @@ import java.time.ZonedDateTime;
 
 @Data
 public class MissionRequest implements RequestComponent {
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private Long id;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
     private String comment;
     private ClientRequest client;
     private SiteRequest site;

@@ -22,15 +22,15 @@ public class MissionEntity implements EntityComponent {
     @Column
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private ClientEntity client;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private SiteEntity site;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private ProviderEntity provider;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     private CollaboratorEntity collaborator;
 }

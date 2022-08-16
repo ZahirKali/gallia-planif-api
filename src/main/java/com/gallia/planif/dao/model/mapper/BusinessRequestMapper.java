@@ -14,20 +14,23 @@ import org.mapstruct.*;
         nullValueIterableMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT
 )
 public interface BusinessRequestMapper {
+
     // Request ->  Business
-    Address map(AddressRequest source);
-    Client map(ClientRequest source);
-    Collaborator map(CollaboratorRequest source);
-    Mission map(MissionRequest source);
-    Provider map(ProviderRequest source);
-    Site map(SiteRequest source);
+    @SubclassMapping(source = AddressRequest.class, target = Address.class)
+    @SubclassMapping(source = ClientRequest.class, target = Client.class)
+    @SubclassMapping(source = CollaboratorRequest.class, target = Collaborator.class)
+    @SubclassMapping(source = MissionRequest.class, target = Mission.class)
+    @SubclassMapping(source = ProviderRequest.class, target = Provider.class)
+    @SubclassMapping(source = SiteRequest.class, target = Site.class)
+    BusinessComponent map(RequestComponent source);
 
 
     // Business -> Request
-    AddressRequest map(Address source);
-    ClientRequest map(Client source);
-    CollaboratorRequest map(Collaborator source);
-    MissionRequest map(Mission source);
-    ProviderRequest map(Provider source);
-    SiteRequest map(Site source);
+    @SubclassMapping(target = AddressRequest.class, source = Address.class)
+    @SubclassMapping(target = ClientRequest.class, source = Client.class)
+    @SubclassMapping(target = CollaboratorRequest.class, source = Collaborator.class)
+    @SubclassMapping(target = MissionRequest.class, source = Mission.class)
+    @SubclassMapping(target = ProviderRequest.class, source = Provider.class)
+    @SubclassMapping(target = SiteRequest.class, source = Site.class)
+    RequestComponent map(BusinessComponent source);
 }

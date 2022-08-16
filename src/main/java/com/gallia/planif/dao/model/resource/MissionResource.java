@@ -7,8 +7,8 @@ import java.time.ZonedDateTime;
 @Data
 public class MissionResource implements ResourceComponent {
     private long id;
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
     private String comment;
     private ClientResource client;
     private SiteResource site;

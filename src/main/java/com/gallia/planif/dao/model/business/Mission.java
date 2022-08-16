@@ -7,8 +7,8 @@ import java.time.ZonedDateTime;
 @Data
 public class Mission implements BusinessComponent{
     private Long id;
-    private ZonedDateTime start;
-    private ZonedDateTime end;
+    private ZonedDateTime startDate;
+    private ZonedDateTime endDate;
     private String comment;
     private Client client;
     private Site site;

@@ -14,21 +14,22 @@ import org.mapstruct.*;
 public interface BusinessResourceMapper {
 
     // Resource ->  Business
-    Address map(AddressResource source);
-    Client map(ClientResource source);
-    Collaborator map(CollaboratorResource source);
-    Mission map(MissionResource source);
-    Provider map(ProviderResource source);
-    Site map(SiteResource source);
+    @SubclassMapping(source = AddressResource.class, target = Address.class)
+    @SubclassMapping(source = ClientResource.class, target = Client.class)
+    @SubclassMapping(source = CollaboratorResource.class, target = Collaborator.class)
+    @SubclassMapping(source = MissionResource.class, target = Mission.class)
+    @SubclassMapping(source = ProviderResource.class, target = Provider.class)
+    @SubclassMapping(source = SiteResource.class, target = Site.class)
+    BusinessComponent map(ResourceComponent source);
 
 
     // Business -> Resource
-    AddressResource map(Address source);
-    ClientResource map(Client source);
-    CollaboratorResource map(Collaborator source);
-    MissionResource map(Mission source);
-    ProviderResource map(Provider source);
-    SiteResource map(Site source);
-
+    @SubclassMapping(target = AddressResource.class, source = Address.class)
+    @SubclassMapping(target = ClientResource.class, source = Client.class)
+    @SubclassMapping(target = CollaboratorResource.class, source = Collaborator.class)
+    @SubclassMapping(target = MissionResource.class, source = Mission.class)
+    @SubclassMapping(target = ProviderResource.class, source = Provider.class)
+    @SubclassMapping(target = SiteResource.class, source = Site.class)
+    ResourceComponent map(BusinessComponent source);
 
 }

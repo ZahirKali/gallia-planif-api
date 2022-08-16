@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class ProviderRequest implements RequestComponent {
+    private Long id;
     private String name;
 }
