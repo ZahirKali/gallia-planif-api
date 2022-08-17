@@ -20,7 +20,7 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T22:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
@@ -38,7 +38,7 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T20:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
@@ -56,7 +56,7 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T22:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
@@ -74,7 +74,7 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T18:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
@@ -92,7 +92,7 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T21:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
@@ -111,7 +111,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-10T21:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
@@ -130,7 +130,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-11T08:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
@@ -149,7 +149,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-12T06:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
@@ -168,7 +168,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-12T06:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
@@ -185,7 +185,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-09-02T00:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
@@ -201,7 +201,7 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-09-02T01:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
         Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
 
         // Then

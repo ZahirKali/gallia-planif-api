@@ -27,6 +27,9 @@ public class MissionServiceImpl extends AbstractGenericService<Mission, MissionE
         mission.setMorningWorkedHoursNumber(workedHours.getMorning());
         mission.setNightWorkedHoursNumber(workedHours.getNight());
         mission.setTotalWorkedHoursNumber(workedHours.getMorning() + workedHours.getNight());
+        mission.setHolidayWorkedHoursNumber(workedHours.getHoliday());
+        mission.setNightHolidayWorkedHoursNumber(workedHours.getNightHoliday());
+        mission.setSundayWorkedHoursNumber(workedHours.getSunday());
         return super.create(mission);
     }
 }

@@ -2,21 +2,33 @@ package com.gallia.planif.service.impl;
 
 import com.gallia.planif.dao.model.business.Mission;
 import com.gallia.planif.dao.model.business.WorkedHoursNumber;
+import com.gallia.planif.service.HolidayAPiCaller;
 import com.gallia.planif.service.HoursCalculator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 
 @Service
 public class HoursCalculatorImpl implements HoursCalculator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HoursCalculatorImpl.class);
     static final int MORNING_HOUR = 6;
     static final int NIGHT_HOUR = 21;
 
+    private final HolidayAPiCaller holidayAPiCaller;
+
+    public HoursCalculatorImpl(HolidayAPiCaller holidayAPiCaller) {
+        this.holidayAPiCaller = holidayAPiCaller;
+    }
+
     @Override
     public WorkedHoursNumber calculateNumberOfWorkedHours(Mission mission) {
+        LOGGER.debug("calculate worked hours of mission {}", mission.getId());
         ZonedDateTime startDate = mission.getStartDate();
         ZonedDateTime endDate = mission.getEndDate();
         int startDateDayOfYear = startDate.getDayOfYear();
@@ -51,6 +63,8 @@ public class HoursCalculatorImpl implements HoursCalculator {
     }
 
     protected WorkedHoursNumber calculateNumberOfWorkedHoursInSameDay(ZonedDateTime startDate, ZonedDateTime endDate) {
+
+        LOGGER.debug("calculate worked hours between the dates {} and {}", startDate, endDate);
 
         WorkedHoursNumber result = WorkedHoursNumber.zero();
 
@@ -100,6 +114,15 @@ public class HoursCalculatorImpl implements HoursCalculator {
             result.setSunday(result.getMorning() + result.getNight());
         }
 
+        // holiday worked hours
+        if(isHoliday(startDate)) {
+            result.setHoliday(result.getMorning() + result.getNight());
+        }
+
+        // night and holiday hours
+        if(DayOfWeek.SUNDAY.equals(startDate.getDayOfWeek()) && isHoliday(startDate)) {
+            result.setNightHoliday(result.getNight());
+        }
 
         return result;
     }
@@ -116,7 +139,17 @@ public class HoursCalculatorImpl implements HoursCalculator {
         return roundToHalf(minutes / 60);
     }
 
-    public static double roundToHalf(double d) {
+    private static double roundToHalf(double d) {
         return Math.round(d * 2) / 2.0;
+    }
+
+    private boolean isHoliday(ZonedDateTime zonedDateTime) {
+        LOGGER.debug("check if the date {} is holiday", zonedDateTime);
+        int dayOfYear = zonedDateTime.getDayOfYear();
+        Map<java.util.Date, String> holidayDays = holidayAPiCaller.getHoliday(zonedDateTime.getYear());
+        return holidayDays.entrySet().stream()
+                .anyMatch(it ->
+                        dayOfYear == ZonedDateTime.ofInstant(it.getKey().toInstant(), zonedDateTime.getZone()).getDayOfYear()
+                );
     }
 }

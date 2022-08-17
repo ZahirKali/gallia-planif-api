@@ -42,4 +42,13 @@ public class MissionEntity implements EntityComponent {
 
     @Column
     private double nightWorkedHoursNumber;
+
+    @Column
+    private double holidayWorkedHoursNumber;
+
+    @Column
+    private double nightHolidayWorkedHoursNumber;
+
+    @Column
+    private double sundayWorkedHoursNumber;
 }

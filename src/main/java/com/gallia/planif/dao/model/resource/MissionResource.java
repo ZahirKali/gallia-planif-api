@@ -17,4 +17,8 @@ public class MissionResource implements ResourceComponent {
     private double totalWorkedHoursNumber;
     private double morningWorkedHoursNumber;
     private double nightWorkedHoursNumber;
+    private double holidayWorkedHoursNumber;
+    private double nightHolidayWorkedHoursNumber;
+    private double sundayWorkedHoursNumber;
+
 }
