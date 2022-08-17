@@ -1,6 +1,7 @@
 package com.gallia.planif.service.impl;
 
 import com.gallia.planif.dao.model.business.Mission;
+import com.gallia.planif.dao.model.business.WorkedHoursNumber;
 import com.gallia.planif.dao.model.entity.MissionEntity;
 import com.gallia.planif.dao.model.mapper.BusinessEntityMapper;
 import com.gallia.planif.dao.repository.GenericRepository;
@@ -22,10 +23,10 @@ public class MissionServiceImpl extends AbstractGenericService<Mission, MissionE
 
     @Override
     public Mission create(Mission mission) {
-        Pair<Double, Double> workedHours = hoursCalculator.calculateNumberOfWorkedHours(mission);
-        mission.setMorningWorkedHoursNumber(workedHours.getLeft());
-        mission.setNightWorkedHoursNumber(workedHours.getRight());
-        mission.setTotalWorkedHoursNumber(workedHours.getLeft() + workedHours.getRight());
+        WorkedHoursNumber workedHours = hoursCalculator.calculateNumberOfWorkedHours(mission);
+        mission.setMorningWorkedHoursNumber(workedHours.getMorning());
+        mission.setNightWorkedHoursNumber(workedHours.getNight());
+        mission.setTotalWorkedHoursNumber(workedHours.getMorning() + workedHours.getNight());
         return super.create(mission);
     }
 }
