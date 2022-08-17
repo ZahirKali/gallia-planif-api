@@ -176,4 +176,36 @@ class HoursCalculatorImplTest {
         assertEquals(18, result.getRight());
     }
 
+
+    @Test
+    void testCalculateNumberOfWorkedHours_case5() {
+        // Given
+        Mission mission = new Mission();
+        mission.setStartDate(ZonedDateTime.parse("2022-09-01T00:00:00Z"));
+        mission.setEndDate(ZonedDateTime.parse("2022-09-02T00:00:00Z"));
+
+        // When
+        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+
+        // Then
+        assertEquals(15, result.getLeft());
+        assertEquals(9, result.getRight());
+    }
+
+    @Test
+    void testCalculateNumberOfWorkedHours_case6() {
+        // Given
+        Mission mission = new Mission();
+        mission.setStartDate(ZonedDateTime.parse("2022-09-01T01:00:00Z"));
+        mission.setEndDate(ZonedDateTime.parse("2022-09-02T01:00:00Z"));
+
+        // When
+        HoursCalculatorImpl service = new HoursCalculatorImpl();
+        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+
+        // Then
+        assertEquals(15, result.getLeft());
+        assertEquals(9, result.getRight());
+    }
 }

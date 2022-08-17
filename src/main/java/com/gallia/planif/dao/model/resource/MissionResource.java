@@ -14,4 +14,7 @@ public class MissionResource implements ResourceComponent {
     private SiteResource site;
     private ProviderResource provider;
     private CollaboratorResource collaborator;
+    private double totalWorkedHoursNumber;
+    private double morningWorkedHoursNumber;
+    private double nightWorkedHoursNumber;
 }

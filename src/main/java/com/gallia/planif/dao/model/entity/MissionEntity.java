@@ -33,4 +33,13 @@ public class MissionEntity implements EntityComponent {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     private CollaboratorEntity collaborator;
+
+    @Column
+    private double totalWorkedHoursNumber;
+
+    @Column
+    private double morningWorkedHoursNumber;
+
+    @Column
+    private double nightWorkedHoursNumber;
 }

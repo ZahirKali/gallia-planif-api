@@ -36,7 +36,7 @@ public class HoursCalculatorImpl implements HoursCalculator {
         for(int i = 0; i <= daysNumber; i++) {
             // if first iteration, start hour is the real start hour else 0
             if(i == 0) {
-                end = start.withHour(0).plusDays(1);
+                end = start.withHour(0).withMinute(0).plusDays(1);
             } else if(i == daysNumber){
                 start = end;
                 end = endDate;
@@ -65,33 +65,42 @@ public class HoursCalculatorImpl implements HoursCalculator {
 
         ZonedDateTime sixAM =
                 ZonedDateTime.of(startYear, startMonth, startDayOfMonth,
-                        MORNING_HOUR, startMinute, 0, 0, zone);
+                        MORNING_HOUR, 0, 0, 0, zone);
 
         ZonedDateTime twentyOnePM =
                 ZonedDateTime.of(startYear, startMonth, startDayOfMonth,
-                        NIGHT_HOUR, startMinute, 0, 0, zone);
+                        NIGHT_HOUR, 0, 0, 0, zone);
 
+        if(startDate.isEqual(endDate)) {
+            return Pair.of(morningResult, nightResult);
+        }
 
+        // start before 6AM and finish before 6AM OR start after 21PM and finish after 21PM
+        if(isBeforeOrEqual(startDate, sixAM) && isBeforeOrEqual(endDate, sixAM) ||
+                isAfterOrEqual(startDate, twentyOnePM) && isAfterOrEqual(endDate, twentyOnePM)) {
+            nightResult = ChronoUnit.MINUTES.between(startDate, endDate);
+        }
         // start before 6AM and finish after 21PM
         if(isBeforeOrEqual(startDate, sixAM) && isAfterOrEqual(endDate, twentyOnePM)) {
-            morningResult = morningResult + ChronoUnit.MINUTES.between(sixAM, twentyOnePM) / 60;
-            nightResult = ChronoUnit.MINUTES.between(startDate, sixAM) / 60 + ChronoUnit.HOURS.between(twentyOnePM, endDate) / 60;
+            morningResult = morningResult + ChronoUnit.MINUTES.between(sixAM, twentyOnePM);
+            nightResult = ChronoUnit.MINUTES.between(startDate, sixAM)+ ChronoUnit.MINUTES.between(twentyOnePM, endDate);
         }
-        // start before 6AM and finish before 21PM
-        else if(isBeforeOrEqual(startDate, sixAM) && isBeforeOrEqual(endDate, twentyOnePM)) {
-            morningResult = ChronoUnit.MINUTES.between(sixAM, endDate) / 60;
-            nightResult = ChronoUnit.MINUTES.between(startDate, sixAM) / 60;
+        // start before 6AM and finish between 6AM and 21PM
+        else if(isBeforeOrEqual(startDate, sixAM) && isAfterOrEqual(endDate, sixAM) && isBeforeOrEqual(endDate, twentyOnePM)) {
+            morningResult = ChronoUnit.MINUTES.between(sixAM, endDate);
+            nightResult = ChronoUnit.MINUTES.between(startDate, sixAM);
         }
-        // start after 6AM and finish after 21PM
-        else if(isAfterOrEqual(startDate, sixAM) && isAfterOrEqual(endDate, twentyOnePM)) {
-            morningResult = ChronoUnit.MINUTES.between(startDate, twentyOnePM) / 60;
-            nightResult = ChronoUnit.MINUTES.between(twentyOnePM, endDate) / 60;
+        // start between 6AM and 21PM, and finish after 21PM
+        else if(isAfterOrEqual(startDate, sixAM) && isBeforeOrEqual(startDate, twentyOnePM) && isAfterOrEqual(endDate, twentyOnePM)) {
+            morningResult = ChronoUnit.MINUTES.between(startDate, twentyOnePM);
+            nightResult = ChronoUnit.MINUTES.between(twentyOnePM, endDate);
         }
         // start after 6AM and finish before 21PM
         else if(isAfterOrEqual(startDate, sixAM) && isBeforeOrEqual(endDate, twentyOnePM)) {
-            morningResult = ChronoUnit.MINUTES.between(startDate, endDate) / 60;
+            morningResult = ChronoUnit.MINUTES.between(startDate, endDate);
         }
-        return Pair.of(morningResult, nightResult);
+
+        return Pair.of(minutesToHours(morningResult), minutesToHours(nightResult));
     }
 
     private static boolean isBeforeOrEqual(ZonedDateTime first, ZonedDateTime second) {
@@ -99,5 +108,13 @@ public class HoursCalculatorImpl implements HoursCalculator {
     }
     private static boolean isAfterOrEqual(ZonedDateTime first, ZonedDateTime second) {
         return first.isAfter(second) || first.isAfter(second);
+    }
+
+    private static double minutesToHours(double minutes) {
+        return roundToHalf(minutes / 60);
+    }
+
+    public static double roundToHalf(double d) {
+        return Math.round(d * 2) / 2.0;
     }
 }
