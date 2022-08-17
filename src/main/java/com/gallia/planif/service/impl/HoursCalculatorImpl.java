@@ -102,7 +102,7 @@ public class HoursCalculatorImpl implements HoursCalculator {
         // start between 6AM and 21PM, and finish after 21PM
         else if (isAfterOrEqual(startDate, sixAM) && isBeforeOrEqual(startDate, twentyOnePM) && isAfterOrEqual(endDate, twentyOnePM)) {
             result.setMorning(minutesToHours(ChronoUnit.MINUTES.between(startDate, twentyOnePM)));
-            result.setNight(minutesToHours(ChronoUnit.MINUTES.between(startDate, twentyOnePM)));
+            result.setNight(minutesToHours(ChronoUnit.MINUTES.between(twentyOnePM, endDate)));
         }
         // start after 6AM and finish before 21PM
         else if (isAfterOrEqual(startDate, sixAM) && isBeforeOrEqual(endDate, twentyOnePM)) {

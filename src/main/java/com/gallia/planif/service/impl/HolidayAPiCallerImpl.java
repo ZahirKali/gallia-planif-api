@@ -14,8 +14,8 @@ import java.util.Map;
 @Service
 public class HolidayAPiCallerImpl implements HolidayAPiCaller {
 
-//    @Value("holiday.api.url")
-    private final String apiUrl = "https://calendrier.api.gouv.fr/jours-feries/metropole/";
+    @Value("holiday.api.url")
+    private String apiUrl;
 
 
     @Override

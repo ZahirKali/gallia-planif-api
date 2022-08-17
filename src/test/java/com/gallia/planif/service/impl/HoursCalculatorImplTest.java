@@ -1,8 +1,13 @@
 package com.gallia.planif.service.impl;
 
 import com.gallia.planif.dao.model.business.Mission;
-import org.apache.commons.lang3.tuple.Pair;
+import com.gallia.planif.dao.model.business.WorkedHoursNumber;
+import com.gallia.planif.service.HolidayAPiCaller;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.time.ZonedDateTime;
 
@@ -10,6 +15,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HoursCalculatorImplTest {
 
+    @InjectMocks
+    private HoursCalculatorImpl service;
+
+    @Mock
+    private HolidayAPiCaller holidayAPiCaller;
+
+    @BeforeEach
+    void initService() {
+        MockitoAnnotations.openMocks(this);
+    }
     /**
      * start before 6AM and finish after 21PM
      */
@@ -20,12 +35,11 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T22:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
-        assertEquals(Double.valueOf(15), result.getLeft());
-        assertEquals(Double.valueOf(4), result.getRight());
+        assertEquals(15.0, result.getMorning());
+        assertEquals(4.0, result.getNight());
     }
 
     /**
@@ -38,12 +52,11 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T20:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
-        assertEquals(14, result.getLeft());
-        assertEquals(6, result.getRight());
+        assertEquals(14, result.getMorning());
+        assertEquals(6, result.getNight());
     }
 
     /**
@@ -56,12 +69,11 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T22:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
-        assertEquals(15, result.getLeft());
-        assertEquals(1, result.getRight());
+        assertEquals(15, result.getMorning());
+        assertEquals(1, result.getNight());
     }
 
     /**
@@ -74,12 +86,11 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T18:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
-        assertEquals(10, result.getLeft());
-        assertEquals(0, result.getRight());
+        assertEquals(10, result.getMorning());
+        assertEquals(0, result.getNight());
     }
 
     /**
@@ -92,12 +103,11 @@ class HoursCalculatorImplTest {
         ZonedDateTime endDate = ZonedDateTime.parse("2022-01-10T21:00:00Z");
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHoursInSameDay(startDate, endDate);
 
         // Then
-        assertEquals(15, result.getLeft());
-        assertEquals(0, result.getRight());
+        assertEquals(15, result.getMorning());
+        assertEquals(0, result.getNight());
     }
 
     /**
@@ -111,12 +121,11 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-10T21:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(15, result.getLeft());
-        assertEquals(0, result.getRight());
+        assertEquals(15, result.getMorning());
+        assertEquals(0, result.getNight());
     }
 
     /**
@@ -130,12 +139,11 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-11T08:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(17, result.getLeft());
-        assertEquals(10, result.getRight());
+        assertEquals(17, result.getMorning());
+        assertEquals(10, result.getNight());
     }
 
     /**
@@ -149,12 +157,11 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-12T06:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(30, result.getLeft());
-        assertEquals(18, result.getRight());
+        assertEquals(30, result.getMorning());
+        assertEquals(18, result.getNight());
     }
 
     /**
@@ -168,12 +175,11 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-01-12T06:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(Double.valueOf("29.5"), result.getLeft());
-        assertEquals(18, result.getRight());
+        assertEquals(Double.valueOf("29.5"), result.getMorning());
+        assertEquals(18, result.getNight());
     }
 
 
@@ -185,12 +191,11 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-09-02T00:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(15, result.getLeft());
-        assertEquals(9, result.getRight());
+        assertEquals(15, result.getMorning());
+        assertEquals(9, result.getNight());
     }
 
     @Test
@@ -201,11 +206,10 @@ class HoursCalculatorImplTest {
         mission.setEndDate(ZonedDateTime.parse("2022-09-02T01:00:00Z"));
 
         // When
-        HoursCalculatorImpl service = new HoursCalculatorImpl(holidayAPiCaller);
-        Pair<Double, Double> result = service.calculateNumberOfWorkedHours(mission);
+        WorkedHoursNumber result = service.calculateNumberOfWorkedHours(mission);
 
         // Then
-        assertEquals(15, result.getLeft());
-        assertEquals(9, result.getRight());
+        assertEquals(15, result.getMorning());
+        assertEquals(9, result.getNight());
     }
 }
