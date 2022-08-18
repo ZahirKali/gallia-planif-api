@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class HolidayAPiCallerImpl implements HolidayAPiCaller {
 
-    @Value("holiday.api.url")
+    @Value("${holiday.api.url}")
     private String apiUrl;
 
 
